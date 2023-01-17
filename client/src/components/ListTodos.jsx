@@ -1,15 +1,12 @@
 import { useState, useEffect } from 'react'
 import axios from '../utils/axiosCustom'
-import EditTodo from './EditTodo'
-import Button from 'react-bootstrap/Button'
-import Modal from 'react-bootstrap/Modal'
+
+import ModalEdit from './ModalEdit'
 
 function ListTodos() {
-  const [todos, setTodos] = useState([])
   const [show, setShow] = useState(false)
-
-  const handleClose = () => setShow(false)
-  const handleShow = () => setShow(true)
+  const [todos, setTodos] = useState([])
+  const [dataEdit, setDataEdit] = useState({})
 
   const fetchApi = async () => {
     const res = await axios.get('/todos')
@@ -25,15 +22,10 @@ function ListTodos() {
     setTodos(todos.filter((todo) => todo.todo_id !== id))
   }
 
-  const updateTodo = async (e) => {
-    e.preventDefault()
-    try {
-      const body = { description }
-      const response = await axios.put(`/todos/${todo.todo_id}`, JSON.stringify(body))
-      window.location = '/'
-    } catch (err) {
-      console.error(err.message)
-    }
+  const onClickEdit = (id) => {
+    setShow(true)
+    const todoUpdate = todos.filter((todo) => todo.todo_id === id)
+    setDataEdit(...todoUpdate)
   }
 
   return (
@@ -41,6 +33,7 @@ function ListTodos() {
       <table className='table mt-5 text-center'>
         <thead>
           <tr>
+            <th>ID</th>
             <th>Description</th>
             <th>Edit</th>
             <th>Delete</th>
@@ -49,9 +42,12 @@ function ListTodos() {
         <tbody>
           {todos.map((todo) => (
             <tr key={todo.todo_id}>
+              <td>{todo.todo_id}</td>
               <td>{todo.description}</td>
               <td>
-                <EditTodo todo={todo} />
+                <button className='btn btn-primary' onClick={() => onClickEdit(todo.todo_id)}>
+                  Edit Todo
+                </button>
               </td>
               <td>
                 <button className='btn btn-danger' onClick={() => deleteTodo(todo.todo_id)}>
@@ -62,20 +58,7 @@ function ListTodos() {
           ))}
         </tbody>
       </table>
-      <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <ModalEdit show={show} setShow={setShow} todo={dataEdit} />
     </>
   )
 }
