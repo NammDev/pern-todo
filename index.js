@@ -1,12 +1,20 @@
 const express = require('express')
 const app = express()
-const port = 3000
 const cors = require('cors')
 const pool = require('./db')
+const path = require('path')
+const PORT = process.env.PORT || 3000
+
+// process.env.port
 
 // Middleware
 app.use(cors())
 app.use(express.json())
+
+if (process.env.NODE_ENV === 'production') {
+  // serve static content
+  app.use(express.static(path.join(__dirname, 'client/build')))
+}
 
 // ROUTES
 // Create a todo
@@ -66,6 +74,6 @@ app.delete('/todos/:id', async (req, res) => {
   }
 })
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
+app.listen(PORT, () => {
+  console.log(`Example app listening on port ${PORT}`)
 })
