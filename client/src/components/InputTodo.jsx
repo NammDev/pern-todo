@@ -9,7 +9,7 @@ function InputTodo() {
     try {
       const body = { description }
       const response = await axios.post('/todos', JSON.stringify(body))
-      console.log(response.data)
+      console.log(response)
     } catch (error) {
       console.log(error)
     }
