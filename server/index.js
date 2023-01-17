@@ -9,7 +9,6 @@ app.use(cors())
 app.use(express.json())
 
 // ROUTES
-
 // Create a todo
 app.post('/todos', async (req, res) => {
   try {
@@ -57,8 +56,14 @@ app.put('/todos/:id', async (req, res) => {
 })
 
 // delete a todo
-app.get('/', (req, res) => {
-  res.send('Hello World!')
+app.delete('/todos/:id', async (req, res) => {
+  try {
+    const { id } = req.params
+    await pool.query('DELETE FROM todo WHERE todo_id = $1', [id])
+    res.json(`Todo ${id} was deleted!`)
+  } catch (error) {
+    console.log(error)
+  }
 })
 
 app.listen(port, () => {
