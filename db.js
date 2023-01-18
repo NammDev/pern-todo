@@ -11,7 +11,7 @@ const devConfig = {
 
 const productConfig = {
   connectionString:
-    'postgresql://postgres:2hixIXYg3AyedSbIzbTU@containers-us-west-187.railway.app:7743/railway',
+    'postgresql://postgres:o7x7xcmGQM0VPqDFmLXn@containers-us-west-35.railway.app:8002/railway',
 }
 
 const pool = new Pool(process.env.NODE_ENV === 'production' ? productConfig : devConfig)
