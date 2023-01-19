@@ -3,7 +3,7 @@ import Modal from 'react-bootstrap/Modal'
 import { useState, useEffect } from 'react'
 import axios from '../utils/axiosCustom'
 
-function ModalEdit({ show, setShow, todo }) {
+function ModalEdit({ show, setShow, todo, setTodos, todos }) {
   const [description, setDescription] = useState('')
 
   useEffect(() => {
@@ -17,7 +17,15 @@ function ModalEdit({ show, setShow, todo }) {
     setShow(false)
     const body = { description }
     const response = await axios.put(`/todos/${todo.todo_id}`, JSON.stringify(body))
-    window.location = '/'
+    console.log(response)
+    setTodos((todos) =>
+      todos.map((todo) => {
+        if (todo.todo_id == response.todo_id) {
+          return { ...todo, description: response.description }
+        }
+        return todo
+      })
+    )
   }
 
   return (
