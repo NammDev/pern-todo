@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from '../utils/axiosCustom'
 import InputTodo from './InputTodo'
-
 import ModalEdit from './ModalEdit'
 
 function ListTodos() {
@@ -31,7 +30,7 @@ function ListTodos() {
 
   return (
     <>
-      <InputTodo />
+      <InputTodo setTodos={setTodos} />
       <table className='table mt-5 text-center'>
         <thead>
           <tr>
@@ -60,7 +59,7 @@ function ListTodos() {
           ))}
         </tbody>
       </table>
-      <ModalEdit show={show} setShow={setShow} todo={dataEdit} />
+      <ModalEdit show={show} setShow={setShow} todo={dataEdit} todos={todos} setTodos={setTodos} />
     </>
   )
 }

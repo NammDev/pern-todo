@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import axios from '../utils/axiosCustom'
 
-function InputTodo() {
+function InputTodo({ setTodos }) {
   const [description, setDescription] = useState(' ')
 
   const onSubmit = async (e) => {
@@ -9,8 +9,7 @@ function InputTodo() {
     try {
       const body = { description }
       const response = await axios.post('/todos', JSON.stringify(body))
-
-      window.location = '/'
+      setTodos((state) => [...state, response])
     } catch (error) {
       console.log(error)
     }
