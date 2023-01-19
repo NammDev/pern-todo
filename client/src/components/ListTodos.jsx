@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import axios from '../utils/axiosCustom'
+import InputTodo from './InputTodo'
 
 import ModalEdit from './ModalEdit'
 
@@ -30,6 +31,7 @@ function ListTodos() {
 
   return (
     <>
+      <InputTodo />
       <table className='table mt-5 text-center'>
         <thead>
           <tr>

@@ -9,6 +9,7 @@ function InputTodo() {
     try {
       const body = { description }
       const response = await axios.post('/todos', JSON.stringify(body))
+
       window.location = '/'
     } catch (error) {
       console.log(error)
