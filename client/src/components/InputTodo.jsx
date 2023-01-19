@@ -10,6 +10,7 @@ function InputTodo({ setTodos }) {
       const body = { description }
       const response = await axios.post('/todos', JSON.stringify(body))
       setTodos((state) => [...state, response])
+      setDescription('')
     } catch (error) {
       console.log(error)
     }

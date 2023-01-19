@@ -17,7 +17,6 @@ function ModalEdit({ show, setShow, todo, setTodos, todos }) {
     setShow(false)
     const body = { description }
     const response = await axios.put(`/todos/${todo.todo_id}`, JSON.stringify(body))
-    console.log(response)
     setTodos((todos) =>
       todos.map((todo) => {
         if (todo.todo_id == response.todo_id) {
